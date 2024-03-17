@@ -1,10 +1,10 @@
-# Docker con Ansible y dos nodos
-## Docker lab with Ansible and two target machines
-- This code create three docker images, one as an Ansible controller and two target machines (Rocky Linux 8 OS).
-  
-- Clone this repository and execute the following command:
-  
-`docker compose up -d`
+# Laboratorio Docker con Ansible e due macchine di destinazione
+- Questo codice crea tre immagini Docker, una come controller Ansible e due macchine di destinazione (con sistema operativo Rocky Linux 9).
+
+- Clona questo repository oppure estrai il sorgente dal tar.
+
+- Esegui il seguente comando:
+`docker compose up -d --build`
 
 - Connect to Ansible container:
 ```
@@ -12,46 +12,11 @@ docker exec -it ansible_lab /bin/bash
 ```
 - Check target machine's connection and run playbook:
 ```
-ssh server01
+ssh server01@ansible
 exit
-ssh server2
+ssh server02@ansible
 exit
-ansible-playbook -i hosts playbook. yml
+ansible -m ping -i inventory.ini target
 ```
 
-## Construir el laboratorio con Ansible y dos containers Docker:
-- El objetivo de este repositorio es construir un contenedor Docker con Ansible y dos nodos.Como sistema operativo se utiliza Rocky Linux 8 mediante la imagen oficial de <https://hub.docker.com/_/rockylinux>.
-- Se instalan los paquetes necesarios y se configuran las llaves para conectarse por ssh entre los tres contenedores.
-- Finalmente se ejecuta un playbook de Ansible como prueba, que creará el fichero hola_mundo.txt en los dos nodos. 
-
-- Estructura de directorios:
-```
-├── Docker
-│   ├── Ansible_Control_node
-│   │   └── Dockerfile
-│   └── Target_Server
-│       └── Dockerfile
-├── docker-compose.yml
-├── hosts
-└── playbook.yml
-```
-
-### Instrucciones:
-```
-docker compose up -d
-```
-- Conectarse al contenedor Ansible:
-```
-docker exec -it ansible_lab /bin/bash
-```
-- Comprobar conexión a los nodos y ejecutar el playbook de Ansible:
-```
-ssh server01
-exit
-ssh server2
-exit
-ansible-playbook -i hosts playbook. yml
-```
-  
-- Adaptado de: <https://www.devopsroles.com/devops-use-docker-to-hands-on-ansible/> 
-  
+Customizzato e forkato da https://github.com/fortinux/ansible-lab/tree/main
