@@ -1,9 +1,9 @@
-# Rocky Linux 8 image
-FROM rockylinux:8
+# Rocky Linux 9 image
+FROM rockylinux:9
 
 # Install OpenSSh server and vim
 RUN dnf -y install openssh-server openssh-clients vim
-RUN dnf module -y install python39
+RUN dnf -y install python3.11
 # Uncomment this line if you need devel tools
 # RUN dnf -y groupinstall development
 
@@ -19,5 +19,13 @@ RUN echo "root:" | chpasswd
 
 EXPOSE 22
 
+# Create ansible user with password "ansible" and add to sudo group
+RUN useradd -m ansible && echo "ansible:ansible" | chpasswd && usermod -aG wheel ansible
+
+# Allow the sudo group to execute commands with root privileges without password
+RUN echo '%wheel ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+# Definisci l'alias ll come un comando RUN che esegue ls -l
+RUN echo "alias ll='ls -l'" >> ~/.bashrc
 # Start sshd
 CMD ["/usr/sbin/sshd", "-D"]
