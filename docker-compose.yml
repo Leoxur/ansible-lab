@@ -1,4 +1,4 @@
-version: '1.0.0'
+version: '3'
 services:
   ansible:
     container_name: ansible_lab
@@ -6,7 +6,7 @@ services:
     tty: true
     working_dir: "/var/data"
     volumes:
-      - .:/var/data
+      - ./ansible_lab_volume/:/var/data
 
   server01:
     container_name: server01
@@ -16,3 +16,6 @@ services:
     container_name: server02
     build: ./Docker/Target_Server
     tty: true
+
+volumes:
+  ansible_playbooks:
